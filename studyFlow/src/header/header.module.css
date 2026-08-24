@@ -1,0 +1,39 @@
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:0.75rem;
+}
+
+.leftSide{
+font-size:clamp(0.75rem,1.5vw,2rem);
+}
+
+.leftSide p{
+color: rgba(245, 245, 245, 0.85);
+  /* font-size: clamp(0.75rem,1.5vw,2rem); */
+
+}
+
+.rightSide {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap:1rem;
+  width:22.8%;
+  font-size: clamp(0.75rem,1.5vw,2rem);
+
+}
+.rightSide p{
+    width:100%;
+    color: rgba(245, 245, 245, 0.9);
+overflow-wrap: break-word;
+
+}
+
+.rightSide div{
+    width:46%;
+
+}
+

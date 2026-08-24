@@ -1,0 +1,113 @@
+
+.card {
+  width: 80%;
+  height: 96px;
+  padding: 1rem;
+  border: 1px solid #898e9b;
+  background-color: var(--main-bg);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  border-radius: 10px;
+}
+
+.checkBox {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid #898e9b;
+}
+
+.cardText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-direction: column;
+  /* white-space: nowrap; */
+}
+
+.cardText h2{
+  font-size:clamp(0.75rem,2vw,2.5rem);
+}
+
+.moreInfo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.moreInfo div {
+    width: auto;
+  font-size: clamp(0.5rem,1vw,1rem);
+
+  /* min-width:55px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid #898e9b;
+  /* background-color: #363840; */
+  border-radius: 5px;
+  padding: 0.3rem;
+}
+
+.rightSide {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+}
+
+.taskTime {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+  color: rgba(245, 245, 245, 0.8);
+  gap: 0.1rem;
+}
+
+.taskTime h3 {
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
+}
+
+.progressBar {
+  border: 1px solid #898e9b;
+  height: 5px;
+  width: 100%;
+  min-width: 70px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+
+.currentProgress {
+  width: 10%;
+  height: 10px;
+  background-color: var(--buttons);
+}
+
+.difficulty{
+  background-color: var(--easy-bg);
+  color:lightgreen;
+}
+
+@media (max-width:388px){
+  .progressBar{
+    display:none;
+  }
+
+  .rightSide{
+    padding:0;
+  }
+}
