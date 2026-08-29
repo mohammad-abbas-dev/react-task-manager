@@ -1,6 +1,8 @@
 import style from "./header.module.css";
-
-function Header() {
+import { totalHoursContext } from "../App";
+import { useContext } from "react";
+function Header({tasksCompleted,totalTasks}) {
+  let totalHours = useContext(totalHoursContext)
   return (
     <>
       <div className={style.header}>
@@ -11,11 +13,11 @@ function Header() {
         <div className={style.rightSide}>
           <div className={style.totalDuration}>
             <p>Study Duration</p>
-            <b>6 hrs</b>
+            <b>{totalHours} hrs</b>
           </div>
           <div className={style.totalTasks}>
             <p> Tasks Completed</p>
-            <b>1 / 5</b>
+            <b>{tasksCompleted} / {totalTasks.length}</b>
           </div>
         </div>
       </div>
