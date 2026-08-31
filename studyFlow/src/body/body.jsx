@@ -80,6 +80,9 @@ function Body({ setTasksCompleted, setTotalTasks }) {
     }
   }
 
+    let [clickedTask,setClickedTask] = useState("")
+  
+ 
   return (
     <>
       <div className={style.options}>
@@ -98,11 +101,21 @@ function Body({ setTasksCompleted, setTotalTasks }) {
               All
             </button>
 
-            <button onClick={() => handleCatSearch("In-Progress")} style={{background: filterButtons==="inCompleted"?"#336EF3":""}}>
+            <button
+              onClick={() => handleCatSearch("In-Progress")}
+              style={{
+                background: filterButtons === "inCompleted" ? "#336EF3" : "",
+              }}
+            >
               In-Progress
             </button>
 
-            <button onClick={() => handleCatSearch("Completed")} style={{background: filterButtons==="completed"?"#336EF3":""}}>
+            <button
+              onClick={() => handleCatSearch("Completed")}
+              style={{
+                background: filterButtons === "completed" ? "#336EF3" : "",
+              }}
+            >
               Completed
             </button>
           </div>
@@ -113,9 +126,15 @@ function Body({ setTasksCompleted, setTotalTasks }) {
       </div>
 
       <div className={style.tasks}>
-        <Card tasks={tasks} setTasks={setTasks} filteredTasks={filteredTasks} />
+        <Card
+          tasks={tasks}
+          setTasks={setTasks}
+          filteredTasks={filteredTasks}
+          clickedTask={clickedTask}
+          setClickedTask={setClickedTask}
+        />
       </div>
-      <Info />
+      <Info tasks={tasks} clickedTask={clickedTask} />
     </>
   );
 }

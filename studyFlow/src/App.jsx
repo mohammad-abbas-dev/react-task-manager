@@ -4,6 +4,7 @@ import { createContext, useEffect, useState } from "react";
 export const totalHoursContext = createContext();
 
 function App() {
+  
   let [totalHours, setTotalHours] = useState(0);
   useEffect(() => {
     console.log(totalHours);
