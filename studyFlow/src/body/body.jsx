@@ -57,7 +57,7 @@ function Body({ setTasksCompleted, setTotalTasks }) {
   useEffect(() => {
     total = 0;
     handleTotalHours();
-  }, [total]);
+  }, [tasks]);
 
   function handleStatus() {
     let completed = tasks.filter((task) => task.completed);
@@ -81,15 +81,10 @@ function Body({ setTasksCompleted, setTotalTasks }) {
     }
   }
 
-  let [clickedTask, setClickedTask] = useState({
-    id: 1,
-    title: "Write Some Code",
-    cat: "coding",
-    difficulty: "hard",
-    time: 2,
-    timePassed: 1,
-    completed: false,
-  });
+  let [clickedTask, setClickedTask] = useState(tasks[0]);
+
+
+
 
   return (
     <>

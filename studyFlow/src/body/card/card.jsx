@@ -2,23 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import style from "./card.module.css";
 
 function Card({ tasks, setTasks, filteredTasks, setClickedTask, clickedTask }) {
-  let [difficultyColor, setDifficultyColor] = useState("lightGreen");
-  let [difficultyBg, setDifficultyBg] = useState("var(--easy-bg)");
-  
-  function handleDifficultyColors() {
-    for (let i = 0; i < tasks.length; i++) {
-      if (tasks[i].difficulty === "medium") {
-        setDifficultyColor("lightOrange");
-        setDifficultyBg("var(--medium-bg)");
-      }
-      if (tasks[i].difficulty === "hard") {
-        setDifficultyColor("lightRed");
-        setDifficultyBg("var(--hard-bg)");
-      }
-    }
-  }
-  useEffect(handleDifficultyColors);
-
   function taskClick(id) {
     setClickedTask(filteredTasks.find((task) => task.id === id));
   }
@@ -86,8 +69,22 @@ function Card({ tasks, setTasks, filteredTasks, setClickedTask, clickedTask }) {
                 <div
                   className={style.difficulty}
                   style={{
-                    color: difficultyColor,
-                    backgroundColor: difficultyBg,
+                    color:
+                      task.difficulty === "medium"
+                        ? "#ffd1b3"
+                        : task.difficulty === "hard"
+                          ? "#ff9999"
+                          : task.difficulty === "easy"
+                            ? "#b3ffb3"
+                            : "",
+                    background:
+                      task.difficulty === "medium"
+                        ? "var(--medium-bg)"
+                        : task.difficulty === "hard"
+                          ? "var(--hard-bg)"
+                          : task.difficulty === "easy"
+                            ? "var(--easy-bg)"
+                            : "",
                   }}
                 >
                   {task.difficulty}

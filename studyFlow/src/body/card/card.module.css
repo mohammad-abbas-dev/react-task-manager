@@ -103,8 +103,7 @@
 }
 
 .difficulty{
-  background-color: var(--easy-bg);
-  color:lightgreen;
+  
 }
 
 @media (max-width:388px){

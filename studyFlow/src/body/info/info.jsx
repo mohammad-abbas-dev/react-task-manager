@@ -39,6 +39,14 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
     setEditWindow(!editWindow);
   }
 
+  function handleDelete(id) {
+    if (tasks.length > 0) {
+      setTasks(tasks.filter((task) => task.id !== id).map((task) => task));
+      if (clickedTask.id === id) {
+        setClickedTask(tasks[id] ? tasks[id] : "");
+      }
+    }
+  }
   {
     /* edit functions space ----------------------------------------------------------------- */
   }
@@ -121,20 +129,32 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
         >
           <h2>
             TASK WORKSPACE{" "}
-            <button id="edit" onClick={handleEditWindow}>
+            <button
+              id="edit"
+              onClick={handleEditWindow}
+              style={{ cursor: "pointer" }}
+            >
               ✏️
             </button>{" "}
-            <button id="del">🗑️</button>{" "}
+            <button
+              id="del"
+              onClick={() => handleDelete(clickedTask.id)}
+              style={{ cursor: "pointer" }}
+            >
+              🗑️
+            </button>{" "}
           </h2>
           <p>Active WorkSpace:</p>
-          <b> {clickedTask.title}</b>
+          <b> {clickedTask.title ? clickedTask.title : "Null"}</b>
           <p>Track Session Progress:</p>
           <div className={style.controls}>
             <div className={style.minus} onClick={subtractTimePassed}>
               -
             </div>
             <div className={style.amount}>
-              {clickedTask.timePassed} / {clickedTask.time}h
+              {clickedTask.timePassed
+                ? ` ${clickedTask.timePassed} / ${clickedTask.time}h`
+                : "Null"}
             </div>
             <div className={style.plus} onClick={addTimePassed}>
               +
@@ -143,16 +163,22 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
           <div className={style.timeStatus}>
             <div className={style.time}>
               <p>Category</p>
-              <h3>{clickedTask.cat}</h3>
+              <h3>{clickedTask.cat ? clickedTask.cat : "Null"}</h3>
             </div>
             <div className={style.status}>
-              <p>Target Status</p>
-              <h3>{clickedTask.completed ? "Completed" : "In-Progress"}</h3>
+              <p>Task Status</p>
+              <h3>
+                {clickedTask.completed
+                  ? "Completed"
+                  : clickedTask
+                    ? "In-Progress"
+                    : "Null"}
+              </h3>
             </div>
           </div>
         </div>
 
-        {/*  Editing work space*/}
+        {/*  Editing work space--------------------------------------------------------------*/}
 
         <div
           style={{ display: editWindow ? "block" : "none" }}
@@ -160,7 +186,11 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
         >
           <h2>
             TASK WORKSPACE{" "}
-            <button id="edit" onClick={handleEditWindow}>
+            <button
+              id="edit"
+              onClick={handleEditWindow}
+              style={{ cursor: "pointer" }}
+            >
               ×
             </button>{" "}
             <button id="del" style={{ opacity: 0.5 }}>
@@ -199,13 +229,16 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
             </div>
             <div className={style.status}>
               <p>Difficulty</p>
-              <input
-                type="text"
-                placeholder="Easy, Medium, Hard"
+              <select
                 value={clickedTask.difficulty}
                 onChange={handleDifficultyEdit}
                 maxLength="6"
-              />
+                className={style.difficultyOptions}
+              >
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
             </div>
           </div>
         </div>

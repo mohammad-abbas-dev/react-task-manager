@@ -6,10 +6,7 @@ export const totalHoursContext = createContext();
 function App() {
   
   let [totalHours, setTotalHours] = useState(0);
-  useEffect(() => {
-    console.log(totalHours);
-  }, [totalHours]);
-
+ 
   let [totalTasks, setTotalTasks] = useState([]);
 
   let [tasksCompleted, setTasksCompleted] = useState(0);
