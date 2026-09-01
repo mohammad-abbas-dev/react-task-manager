@@ -48,6 +48,8 @@
   justify-content: center;
   white-space: nowrap;
   border-radius: 10px;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+
 }
 
 .minus,

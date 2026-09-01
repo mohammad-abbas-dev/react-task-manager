@@ -11,6 +11,7 @@ function Body({ setTasksCompleted, setTotalTasks }) {
       cat: "coding",
       difficulty: "hard",
       time: 2,
+      timePassed: 1,
       completed: false,
     },
     {
@@ -19,12 +20,12 @@ function Body({ setTasksCompleted, setTotalTasks }) {
       cat: "daily life",
       difficulty: "medium",
       time: 1,
+      timePassed: 1,
       completed: true,
     },
   ]);
 
   let [searchInput, setSearchInput] = useState("");
-  let [selectedStatue, setSelectedStatue] = useState("");
 
   function handleSearch(e) {
     setSearchInput(e.target.value);
@@ -80,9 +81,16 @@ function Body({ setTasksCompleted, setTotalTasks }) {
     }
   }
 
-    let [clickedTask,setClickedTask] = useState("")
-  
- 
+  let [clickedTask, setClickedTask] = useState({
+    id: 1,
+    title: "Write Some Code",
+    cat: "coding",
+    difficulty: "hard",
+    time: 2,
+    timePassed: 1,
+    completed: false,
+  });
+
   return (
     <>
       <div className={style.options}>
@@ -134,7 +142,7 @@ function Body({ setTasksCompleted, setTotalTasks }) {
           setClickedTask={setClickedTask}
         />
       </div>
-      <Info tasks={tasks} clickedTask={clickedTask} />
+      <Info tasks={tasks} setTasks={setTasks} clickedTask={clickedTask} setClickedTask={setClickedTask} />
     </>
   );
 }

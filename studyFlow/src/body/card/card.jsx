@@ -4,6 +4,7 @@ import style from "./card.module.css";
 function Card({ tasks, setTasks, filteredTasks, setClickedTask, clickedTask }) {
   let [difficultyColor, setDifficultyColor] = useState("lightGreen");
   let [difficultyBg, setDifficultyBg] = useState("var(--easy-bg)");
+  
   function handleDifficultyColors() {
     for (let i = 0; i < tasks.length; i++) {
       if (tasks[i].difficulty === "medium") {
@@ -97,10 +98,17 @@ function Card({ tasks, setTasks, filteredTasks, setClickedTask, clickedTask }) {
               <div className={style.taskTime}>
                 {/* study duration */}
 
-                <h3>1/{task.time}h</h3>
+                <h3>
+                  {task.timePassed}/{task.time}h
+                </h3>
 
                 <div className={style.progressBar}>
-                  <div className={style.currentProgress}></div>
+                  <div
+                    className={style.currentProgress}
+                    style={{
+                      width: `calc((${task.timePassed} / ${task.time}) * 100%)`,
+                    }}
+                  ></div>
                 </div>
               </div>
             </div>
