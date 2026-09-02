@@ -49,7 +49,6 @@
   white-space: nowrap;
   border-radius: 10px;
   font-size: clamp(1rem, 1.5vw, 1.2rem);
-
 }
 
 .minus,
@@ -97,7 +96,6 @@
   flex-direction: column;
   padding: 0.5rem;
   gap: 0.2rem;
-  
 }
 
 .container .timeStatus .time p {
@@ -127,15 +125,27 @@
   min-width: 80px;
 }
 
-.difficultyOptions{
-   background: var(--default-btns);
+.difficultyOptions {
+  background: var(--default-btns);
   border: none;
   height: 50%;
   border-radius: 10px;
   padding: 0.3rem;
   width: 100%;
   min-width: 80px;
-  color:whitesmoke;
+  color: whitesmoke;
+}
+
+.timeStatus .createTask {
+  width: 25%;
+  min-height: 25px;
+  transform: translate(10px, 6.5px);
+  border-radius: 5px;
+}
+
+.timeStatus .createTask:hover {
+  opacity: 0.85;
+  cursor: pointer;
 }
 
 @media (max-width: 630px) {
@@ -148,6 +158,6 @@
     gap: 0rem;
     height: 99px;
     white-space: nowrap;
-    padding-top:1.5rem;
+    padding-top: 1.5rem;
   }
 }

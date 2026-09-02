@@ -83,8 +83,20 @@ function Body({ setTasksCompleted, setTotalTasks }) {
 
   let [clickedTask, setClickedTask] = useState(tasks[0]);
 
+  let [createWindow, setCreateWindow] = useState(false);
 
+        {/*Create a Task WorkSpace ------------------------------------------------------------------------- */}
 
+  function handleCreateWindow(){
+    setCreateWindow(true)
+
+  }
+
+  let [newTask,setNewTask]=useState(null)
+  let [newTaskTitle,setNewTaskTitle]=useState(null)
+  let [newTaskCat,setNewTaskCat]=useState(null)
+  let [newTaskDifficulty,setNewTaskDifficulty]=useState(null)
+  let [newTaskTime,setNewTaskTime]=useState(1)
 
   return (
     <>
@@ -124,20 +136,37 @@ function Body({ setTasksCompleted, setTotalTasks }) {
           </div>
         </div>
         <div className={style.rightSide}>
-          <button className={style.addTask}>+ Add Task</button>
+          <button className={style.addTask} onClick={handleCreateWindow} style={{cursor:"pointer"}}>+ Add Task</button>
         </div>
       </div>
 
       <div className={style.tasks}>
-        <Card
+      {filteredTasks.length!==0?  <Card
           tasks={tasks}
           setTasks={setTasks}
           filteredTasks={filteredTasks}
           clickedTask={clickedTask}
           setClickedTask={setClickedTask}
-        />
+        />: <h2> No Tasks At The Moment </h2>}
       </div>
-      <Info tasks={tasks} setTasks={setTasks} clickedTask={clickedTask} setClickedTask={setClickedTask} />
+      <Info
+        tasks={tasks}
+        setTasks={setTasks}
+        clickedTask={clickedTask}
+        setClickedTask={setClickedTask}
+        setCreateWindow={setCreateWindow}
+        createWindow={createWindow}
+        setNewTask={setNewTask}
+        newTask={newTask}
+        setNewTaskTitle={setNewTaskTitle}
+        newTaskTitle={newTaskTitle}
+        setNewTaskCat={setNewTaskCat}
+        newTaskCat={newTaskCat}
+        setNewTaskDifficulty={setNewTaskDifficulty}
+        newTaskDifficulty={newTaskDifficulty}
+        setNewTaskTime={setNewTaskTime}
+        newTaskTime={newTaskTime}
+      />
     </>
   );
 }

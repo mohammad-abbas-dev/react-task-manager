@@ -1,7 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./info.module.css";
 
-function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
+function Info({
+  tasks,
+  setTasks,
+  clickedTask,
+  setClickedTask,
+  setCreateWindow,
+  createWindow,
+  setNewTask,
+  setNewTaskTitle,
+  setNewTaskCat,
+  setNewTaskDifficulty,
+  setNewTaskTime,
+  newTask,
+  newTaskTitle,
+  newTaskCat,
+  newTaskDifficulty,
+  newTaskTime,
+}) {
   function addTimePassed() {
     if (clickedTask.time > clickedTask.timePassed) {
       setTasks(
@@ -34,22 +51,31 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
     }
   }
 
-  let [editWindow, setEditWindow] = useState(false);
-  function handleEditWindow() {
-    setEditWindow(!editWindow);
-  }
-
+ 
   function handleDelete(id) {
     if (tasks.length > 0) {
       setTasks(tasks.filter((task) => task.id !== id).map((task) => task));
       if (clickedTask.id === id) {
-        setClickedTask(tasks[id] ? tasks[id] : "");
+        setClickedTask(tasks[id] ? tasks[id] :  "");
       }
     }
   }
   {
-    /* edit functions space ----------------------------------------------------------------- */
+    /*
+     * ! Edit functions space -----------------------------------------------------------------
+     */
   }
+
+   let [editWindow, setEditWindow] = useState(false);
+  function handleEditWindow() {
+    setEditWindow(!editWindow);
+  }
+
+  useEffect(()=>{
+   if(createWindow){
+    setEditWindow(false)
+   }
+  },[createWindow])
 
   function handleTitleEdit(e) {
     setTasks(
@@ -82,7 +108,12 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
       setTasks(
         tasks.map((task) => {
           if (clickedTask.id === task.id) {
+            if(task.timePassed<task.time){
             return { ...task, time: task.time - 1 };
+            }else if(task.timePassed===task.time){
+            return { ...task, time: task.time - 1 ,timePassed:task.timePassed-1};
+            }
+
           } else {
             return task;
           }
@@ -118,13 +149,72 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
     setClickedTask((c) => ({ ...c, difficulty: e.target.value }));
   }
 
+  /*
+   * ! Create functions space -----------------------------------------------------------------
+   */
+
+  function handleCreateWindow() {
+    setCreateWindow(false);
+  }
+
+  function handleTitleCreation(e) {
+    setNewTaskTitle(e.target.value);
+  }
+
+  function handleCatCreation(e) {
+    setNewTaskCat(e.target.value);
+  }
+
+  function handleDifficultyCreation(e) {
+    setNewTaskDifficulty(e.target.value);
+  }
+
+  function handleTimeCreation(sign) {
+    if (sign === "plus" && newTaskTime < 24) {
+      setNewTaskTime((t) => t + 1);
+    } else if (sign === "minus" && newTaskTime > 1) {
+      setNewTaskTime((t) => t - 1);
+    }
+  }
+
+  function handleNewTask() {
+    setNewTask({
+      id: tasks.length + 1,
+      title: newTaskTitle,
+      cat: newTaskCat,
+      difficulty: newTaskDifficulty,
+      time: newTaskTime,
+      timePassed: 0,
+      completed: false,
+    });
+  }
+
+  useEffect(() => {
+    if (newTask !== null) {
+      setTasks(t=>[...t,newTask])
+      if(!clickedTask){
+        setClickedTask(newTask)
+      }
+      setNewTask(null);
+      setNewTaskTitle(null);
+      setNewTaskCat(null);
+      setNewTaskDifficulty(null);
+      setNewTaskTime(1);
+      setCreateWindow(false);
+
+      console.log(newTask);
+    }
+  }, [newTask]);
+
   return (
     <>
       <hr />
       <div className={style.container}>
         {/*  main container showing info */}
         <div
-          style={{ display: editWindow ? "none" : "block" }}
+          style={{
+            display: tasks.length===0?"none" : editWindow ? "none" : createWindow ? "none" : "block",
+          }}
           className={style.main}
         >
           <h2>
@@ -152,7 +242,7 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
               -
             </div>
             <div className={style.amount}>
-              {clickedTask.timePassed
+              {clickedTask
                 ? ` ${clickedTask.timePassed} / ${clickedTask.time}h`
                 : "Null"}
             </div>
@@ -181,11 +271,13 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
         {/*  Editing work space--------------------------------------------------------------*/}
 
         <div
-          style={{ display: editWindow ? "block" : "none" }}
+          style={{
+            display: editWindow ? "block" : createWindow ? "none" : "none",
+          }}
           className={style.main}
         >
           <h2>
-            TASK WORKSPACE{" "}
+            EDIT WORKSPACE{" "}
             <button
               id="edit"
               onClick={handleEditWindow}
@@ -240,6 +332,66 @@ function Info({ tasks, setTasks, clickedTask, setClickedTask }) {
                 <option value="hard">Hard</option>
               </select>
             </div>
+          </div>
+        </div>
+
+        {/*Create a Task WorkSpace ------------------------------------------------------------------------- */}
+        <div
+          style={{
+            display: editWindow ? "none" : createWindow ? "block" : "none",
+          }}
+          className={style.main}
+        >
+          <h2>
+            Create a Task{" "}
+            <button
+              id="edit"
+              onClick={handleCreateWindow}
+              style={{ cursor: "pointer" }}
+            >
+              ×
+            </button>{" "}
+            <button id="del" style={{ opacity: 0 }}>
+              🗑️
+            </button>{" "}
+          </h2>
+          <p>Task Title:</p>
+          <input type="text" onChange={handleTitleCreation} value={newTaskTitle?newTaskTitle:""}  />
+          <p>Estimated Time:</p>
+          <div className={style.controls}>
+            <div
+              className={style.minus}
+              onClick={() => handleTimeCreation("minus")}
+            >
+              -
+            </div>
+            <div className={style.amount}>{newTaskTime}h</div>
+            <div
+              className={style.plus}
+              onClick={() => handleTimeCreation("plus")}
+            >
+              +
+            </div>
+          </div>
+          <div className={style.timeStatus}>
+            <div className={style.time}>
+              <p>Category</p>
+              <input type="text" onChange={handleCatCreation} value={newTaskCat?newTaskCat:""} />
+            </div>
+            <div className={style.status}>
+              <p>Difficulty</p>
+              <select
+                onChange={handleDifficultyCreation}
+                className={style.difficultyOptions}
+              >
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+            <button className={style.createTask} onClick={handleNewTask}>
+              Create Task
+            </button>
           </div>
         </div>
       </div>
